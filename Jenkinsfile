@@ -15,7 +15,7 @@ pipeline {
     
     stages {
 
-        stage('SonarQube Analysis') {
+       /* stage('SonarQube Analysis') {
             steps {
                 script {
                     withSonarQubeEnv('SonarQube-Server') {
@@ -31,17 +31,7 @@ pipeline {
                 }
             }
         }
-        stage('OWASP Dependency-Check Vulnerabilities') {
-              steps {
-                dependencyCheck additionalArguments: ''' 
-                            -o './'
-                            -s './'
-                            -f 'ALL' 
-                            --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
-                
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-              }
-        }
+        
 
         stage("Quality Gate") {
             steps {
@@ -49,9 +39,21 @@ pipeline {
                     waitForQualityGate abortPipeline: true  // Wait for SonarQube Quality Gate result
                 }
             }
-        }
-
-        stage('Build Docker Image') {
+        }*/
+        
+        stage('OWASP Dependency-Check Vulnerabilities') {
+                      steps {
+                        dependencyCheck additionalArguments: ''' 
+                                    -o './'
+                                    -s './'
+                                    -f 'ALL' 
+                                    --prettyPrint''', odcInstallation: 'OWASP Dependency-Check Vulnerabilities'
+                        
+                        dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+                      }
+                }
+        
+       /* stage('Build Docker Image') {
             steps {
                 script {
                     dir('src') { 
@@ -76,7 +78,7 @@ pipeline {
                             docker.image("${DOCKER_USER}/microservices-${APP_NAME}:${IMAGE_TAG}").push()
                         }
                     }
-                }
+                }*/
             
 }
 

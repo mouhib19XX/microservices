@@ -13,7 +13,7 @@ pipeline {
         IMAGE_TAG = "${RELEASE}-${BUILD_NUMBER}"
     }
 
-    stages {
+   stages {
 
         stage('SonarQube Analysis') {
             steps {
